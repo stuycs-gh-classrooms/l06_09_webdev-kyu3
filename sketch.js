@@ -87,7 +87,7 @@ function drawhand( x, y){
 }
 
 function clockFace(x, y){
- fill(#8FD2F5);
+ fill(0,0,0);
  noStroke();
  circle(centerx, centery, 800); 
  stroke(0);
