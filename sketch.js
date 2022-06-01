@@ -3,7 +3,7 @@ function setup() {
 }
 
 function draw () {
-  background(255,255,255);
+  background(255);
   strokeJoin(BEVEL);
   stroke(0);
   line(1,1,250,250);
