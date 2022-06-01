@@ -1,8 +1,8 @@
-void setup() {
+function setup() {
   createCanvas (500,500);
 }
 
-void draw () {
+function draw () {
   background(255,255,255);
   strokeJoin(BEVEL);
   stroke(0);
