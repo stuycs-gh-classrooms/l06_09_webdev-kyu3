@@ -7,12 +7,12 @@ function draw () {
   strokeJoin(BEVEL);
   stroke(0);
   line(1,1,250,250);
-  stroke(#e64a52);
+  stroke(0);
   line(250,250, 375, 125);
-  stroke(#9c73de);
+  stroke(0);
   line(375, 125, 250, 125);
-  stroke(#94395a);
+  stroke(0);
   line(250,125,365, 1);
-  stroke(#625239);
+  stroke(0);
   line(365,1,1,1);
 }
