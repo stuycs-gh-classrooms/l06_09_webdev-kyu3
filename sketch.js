@@ -57,27 +57,27 @@ function timeToAngle( con1){
 }
 function hourhand(x, y){
   stroke(255,0,0);
-  float theta = timeToAngle(1);
-  float ney = newY(250, centery, theta);
-  float nex = newX(250, centerx, theta);
+  var theta = timeToAngle(1);
+  var ney = newY(250, centery, theta);
+  var nex = newX(250, centerx, theta);
   line(centerx,centery,nex,ney);
   println(hour());
 }
 
 function minutehand(x, y){
   stroke(0,200,0);
-  float theta = timeToAngle(2);
-  float ney = newY(300, centery, theta);
-  float nex = newX(300, centerx, theta);
+  var theta = timeToAngle(2);
+  var ney = newY(300, centery, theta);
+  var nex = newX(300, centerx, theta);
   line(x,y,nex,ney);
   println(minute());
 }
 
 function sechand(x, y){
   stroke(0,0,255);
-  float theta = timeToAngle(3);
-  float ney = newY(350, centery, theta);
-  float nex = newX(350, centerx, theta);
+  var theta = timeToAngle(3);
+  var ney = newY(350, centery, theta);
+  var nex = newX(350, centerx, theta);
   line(x,y,nex,ney);
 }
 
@@ -92,7 +92,7 @@ function clockFace(x, y){
  noStroke();
  circle(centerx, centery, 800); 
  stroke(0);
- int count = 0;
+ var count = 0;
  while (count <=60){
    var ney = newY(400, centery, theta);
    var nex = newX(400, centerx, theta);
@@ -111,5 +111,5 @@ function clockFace(x, y){
    count ++;
  }
  textSize(128);
- int timvar =1;
+ var timvar =1;
 }
