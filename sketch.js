@@ -1,115 +1,78 @@
-var hour;
-var minute;
-var second;
-var centerx;
-var centery;
-var theta;
-
-
-function setup() {
-  // put setup code here
- createCanvas size(1000,1000);
-  background(255);
-  centerx = width/2;
-  centery = height/2;
-  theta = 0;
+var h, m, s;
+var cx, cy, theta, diameter, sradius, sradians, mradius, mradians, hradius, hradians;
+function setup () {
+  createCanvas (400, 400);
+  h =  hour(); 
+  m = minute(); 
+  s = second();
+  cx = width/2;
+  cy = height/2;
+  diameter = 300;
+  sradius = (diameter / 2.0) * 0.72;
+  mradius = (diameter / 2.0) * 0.6;
+  hradius = (diameter / 2.0) * 0.5; 
 }
 
-function draw() {
-  // put drawing code here
-  clockFace(centerx, centery);
+function draw () {
+  background (0, 0, 139);
+  fill(173, 216, 230);
+  clockFace( cx, cy, diameter);
+  timeToAngle (h, m, s);
+  //black line represents hour hand, purple represents minute, and red represents second 
+  stroke (0, 0, 0); 
+  strokeWeight(6);
+  drawHand (cx, cy, hradians, 40.0);
+  stroke (128, 0, 128);
+  drawHand (cx, cy, mradians, 100.0);
+  strokeWeight(2);
+  stroke(255, 0, 0); 
+  drawHand (cx, cy, sradians, 70.0);
+  updateTime(); 
+  minTicks();
+  fill(255);
+  textSize(35);
+  text(hour() - 12 + ":", 100, 390);
+  text(minute() + ":", 150, 390);
+  text("  " + second(), 200, 390);
+  fill(0);
+  textSize(20);
+  text(12, cx - 10, cy - 120);
+  text(3, cx + 120, cy);
+  text(6, cx - 5, cy + 135);
+  text(9, cx - 135, cy);
+}
+
+function timeToAngle (h, m, s){
+  if ( h > 12) {
+    h = h - 12;
+  }
+  hradians = radians((h * 30) - 90);
+  sradians = radians((s * 6) - 90);
+  mradians = radians ( (m * 6) - 90); 
   updateTime();
-  drawhand(centerx, centery);
+  return(hradians);
 }
-
-function newY(amplitude, offset,  t){
-
-   var y = sin(radians(t-90));
-   y = y*amplitude + offset;
-   return y;
+function drawHand (cx, cy, clockTime, lineradius) {
+  //Uses the hradians from timeToAngle as clockTime
+  line (cx, cy, cx + cos(clockTime) * lineradius, cy + sin(clockTime) * lineradius); 
 }
-
-function newX( amplitude,  offset, t){
-
-   var x = cos(radians(t-90));
-   x = x*amplitude + offset;
-   return x;
+function clockFace (cx, cy, diameter){
+  circle (cx, cy, diameter); 
 }
-
-function updateTime(){
-  hour = hour();
-  minute = minute();
-  second = second();
+function updateTime () {
+  s = second();
+  h = hour();
+  m = minute(); 
 }
-
-function timeToAngle( con1){
-  var x = 0;
-  if (con1 == 1){
-    x = hour%12*30;
+//minute ticks on the clock (optional) 
+function minTicks() {
+  strokeWeight(2);
+  beginShape(POINTS);
+  for (a = 0; a < 360; a+=6) {
+    var angle = radians(a);
+    var x = cx + cos(angle) * sradius;
+    var y = cy + sin(angle) * sradius;
+    vertex(x, y);
   }
-  if (con1 == 2){
-    x = minute%60*6;
-  }
-  if (con1 == 3){
-    x = second%60*6;
-  }
-  return x;
-}
-function hourhand(x, y){
-  stroke(255,0,0);
-  float theta = timeToAngle(1);
-  float ney = newY(250, centery, theta);
-  float nex = newX(250, centerx, theta);
-  line(centerx,centery,nex,ney);
-  println(hour());
-}
-
-function minutehand(x, y){
-  stroke(0,200,0);
-  float theta = timeToAngle(2);
-  float ney = newY(300, centery, theta);
-  float nex = newX(300, centerx, theta);
-  line(x,y,nex,ney);
-  println(minute());
-}
-
-function sechand(x, y){
-  stroke(0,0,255);
-  float theta = timeToAngle(3);
-  float ney = newY(350, centery, theta);
-  float nex = newX(350, centerx, theta);
-  line(x,y,nex,ney);
-}
-
-function drawhand( x, y){
-  hourhand(centerx, centery);
-  minutehand(centerx,centery);
-  sechand(centerx,centery); 
-}
-
-function clockFace(x, y){
- fill(#8FD2F5);
- noStroke();
- circle(centerx, centery, 800); 
- stroke(0);
- int count = 0;
- while (count <=60){
-   var ney = newY(400, centery, theta);
-   var nex = newX(400, centerx, theta);
-   var newnex; 
-   var newney; 
-   if (theta%30==0){
-     newnex=newX(375,centerx,theta);
-     newney = newY(375,centery,theta);
-   }
-   else{
-     newnex=newX(390,centerx,theta);
-     newney = newY(390,centery,theta);
-   }
-   line(nex,ney,newnex,newney); //hour and minute marks
-   theta += 6;
-   count ++;
- }
- textSize(128);
- int timvar =1;
+  endShape();
 }
