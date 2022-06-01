@@ -6,7 +6,7 @@ var speed;
 
 function setup() {
   // put setup code here
- CreateCanvas size(400,400);
+ createCanvas size(400,400);
  frameRate(15);
  x=width/2;
  y=25;
