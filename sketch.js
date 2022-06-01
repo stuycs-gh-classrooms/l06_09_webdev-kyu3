@@ -24,14 +24,14 @@ function draw() {
 
 function newY(amplitude, offset,  t){
 
-   float y = sin(radians(t-90));
+   var y = sin(radians(t-90));
    y = y*amplitude + offset;
    return y;
 }
 
 function newX( amplitude,  offset, t){
 
-   float x = cos(radians(t-90));
+   var x = cos(radians(t-90));
    x = x*amplitude + offset;
    return x;
 }
@@ -43,7 +43,7 @@ function updateTime(){
 }
 
 function timeToAngle( con1){
-  float x = 0;
+  var x = 0;
   if (con1 == 1){
     x = hour%12*30;
   }
@@ -94,10 +94,10 @@ function clockFace(x, y){
  stroke(0);
  int count = 0;
  while (count <=60){
-   float ney = newY(400, centery, theta);
-   float nex = newX(400, centerx, theta);
-   float newnex; 
-   float newney; 
+   var ney = newY(400, centery, theta);
+   var nex = newX(400, centerx, theta);
+   var newnex; 
+   var newney; 
    if (theta%30==0){
      newnex=newX(375,centerx,theta);
      newney = newY(375,centery,theta);
