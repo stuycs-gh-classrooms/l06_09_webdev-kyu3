@@ -1,39 +1,115 @@
-var x;
-var y;
-var radius;
-var speed;
+var hour;
+var minute;
+var second;
+var centerx;
+var centery;
+var theta;
 
 
 function setup() {
   // put setup code here
- createCanvas size(400,400);
- frameRate(15);
- x=width/2;
- y=25;
- radius=50;
- speed =5;
- background(255);
+ createCanvas size(1000,1000);
+  background(255);
+  centerx = width/2;
+  centery = height/2;
+  theta = 0;
 }
 
 function draw() {
   // put drawing code here
-   background(255);
-  if (y<=height/2){
-    fill(0,0,255);
-  }
-  if (y>=height/2){
-    fill(0,255,0);
-  }
-  circ(x,y,radius/2);
-  if((y<height-radius/2)||(y>=0)){
-   y+=speed;
-   if ((y>=height-radius/4)||(y<=radius/4)){
-     speed = -speed;
-  }
-  println(y);
-  }
+  clockFace(centerx, centery);
+  updateTime();
+  drawhand(centerx, centery);
 }
 
-function circ( x,  y, radius){
- circle(x, y, radius/2); 
+function newY(amplitude, offset,  t){
+
+   float y = sin(radians(t-90));
+   y = y*amplitude + offset;
+   return y;
+}
+
+function newX( amplitude,  offset, t){
+
+   float x = cos(radians(t-90));
+   x = x*amplitude + offset;
+   return x;
+}
+
+function updateTime(){
+  hour = hour();
+  minute = minute();
+  second = second();
+}
+
+function timeToAngle( con1){
+  float x = 0;
+  if (con1 == 1){
+    x = hour%12*30;
+  }
+  if (con1 == 2){
+    x = minute%60*6;
+  }
+  if (con1 == 3){
+    x = second%60*6;
+  }
+  return x;
+}
+function hourhand(x, y){
+  stroke(255,0,0);
+  float theta = timeToAngle(1);
+  float ney = newY(250, centery, theta);
+  float nex = newX(250, centerx, theta);
+  line(centerx,centery,nex,ney);
+  println(hour());
+}
+
+function minutehand(x, y){
+  stroke(0,200,0);
+  float theta = timeToAngle(2);
+  float ney = newY(300, centery, theta);
+  float nex = newX(300, centerx, theta);
+  line(x,y,nex,ney);
+  println(minute());
+}
+
+function sechand(x, y){
+  stroke(0,0,255);
+  float theta = timeToAngle(3);
+  float ney = newY(350, centery, theta);
+  float nex = newX(350, centerx, theta);
+  line(x,y,nex,ney);
+}
+
+function drawhand( x, y){
+  hourhand(centerx, centery);
+  minutehand(centerx,centery);
+  sechand(centerx,centery); 
+}
+
+function clockFace(x, y){
+ fill(#8FD2F5);
+ noStroke();
+ circle(centerx, centery, 800); 
+ stroke(0);
+ int count = 0;
+ while (count <=60){
+   float ney = newY(400, centery, theta);
+   float nex = newX(400, centerx, theta);
+   float newnex; 
+   float newney; 
+   if (theta%30==0){
+     newnex=newX(375,centerx,theta);
+     newney = newY(375,centery,theta);
+   }
+   else{
+     newnex=newX(390,centerx,theta);
+     newney = newY(390,centery,theta);
+   }
+   line(nex,ney,newnex,newney); //hour and minute marks
+   theta += 6;
+   count ++;
+ }
+ textSize(128);
+ int timvar =1;
 }
